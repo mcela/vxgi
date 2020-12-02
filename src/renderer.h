@@ -1,3 +1,10 @@
+enum Render_Mode : int
+{
+	RENDER_VOXELIZED_SCENE,
+	RENDER_SCENE,
+	RENDER_SHADOW_MAP
+};
+
 namespace renderer
 {
 	void init(GLFWwindow* window);

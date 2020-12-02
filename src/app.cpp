@@ -1,44 +1,11 @@
 namespace
 {
-	struct App_Config
-	{
-		enum Window_Mode
-		{
-			WINDOWED_FULLSCREEN,
-			WINDOWED,
-			//FULLSCREEN
-		};
-
-		const char* window_title = "VXGI 2020";
-		Window_Mode window_mode = WINDOWED;
-
-		int gl_major_version = 4;
-		int gl_minor_version = 5;
-		int msaa_samples = 0;
-		int vsync_mode = 1; // -1, 0, 1, https://www.glfw.org/docs/3.3/window_guide.html#buffer_swap
-
-		vec2 window_resolution = vec2(1920, 1080); // used if window_mode == WINDOWED
-	};
-
-	enum Input_State
-	{
-		FPS_CAMERA,
-		UI_INTERACTION
-	};
-
-	struct Application
-	{
-		GLFWwindow* window = NULL;
-		Input_State input_state = FPS_CAMERA;
-		Fly_Camera_Controls camera_controls;
-	};
-
 	Application& get_app() {
 		static Application app;
 		return app;
 	}
 
-	bool create_window(const App_Config& config);
+	bool create_window(const Application_Config& config);
 	void destroy_window();
 	void GLFW_error_callback(int error, const char* description);
 }
@@ -50,7 +17,7 @@ namespace application
 		LOG("app", "initializing");
 		Application& app = get_app();
 
-		App_Config default_config;
+		Application_Config default_config;
 		if (!create_window(default_config))
 			return false;
 
@@ -212,7 +179,7 @@ namespace resolution
 
 namespace
 {
-	bool create_window(const App_Config& config)
+	bool create_window(const Application_Config& config)
 	{
 		LOG("app", "initializing opengl context");
 		Application& app = get_app();
@@ -240,7 +207,7 @@ namespace
 		{
 			switch (config.window_mode)
 			{
-				case App_Config::Window_Mode::WINDOWED_FULLSCREEN:
+				case Application_Config::Window_Mode::WINDOWED_FULLSCREEN:
 				{
 					LOG("app", "creating windowed fullscreen");
 
@@ -256,7 +223,7 @@ namespace
 				}
 				break;
 
-				case App_Config::Window_Mode::WINDOWED:
+				case Application_Config::Window_Mode::WINDOWED:
 				{
 					app.window = glfwCreateWindow(config.window_resolution.x, config.window_resolution.y, config.window_title, NULL, NULL);
 				}

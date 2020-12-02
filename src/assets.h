@@ -1,3 +1,15 @@
+struct Asset_Manager
+{
+	Array<Model*>     models;
+	Array<Mesh*>      meshes;
+	Array<Material*>  materials;
+	Array<Texture2D*> textures;
+
+	Texture2D         blank;
+	Mesh              unit_cube;
+	Mesh              unit_quad;
+};
+
 namespace assets
 {
 	void init();

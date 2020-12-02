@@ -26,6 +26,11 @@ struct Scene_Config
 	Cone_Tracing_Shader_Settings vct_config;
 };
 
+struct Scene_Manager
+{
+	Scene current;
+};
+
 namespace scene
 {
 	void init(Scene& scene, const Scene_Config& config);

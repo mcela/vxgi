@@ -1,9 +1,9 @@
 namespace
 {
-	struct Scene_Manager
-	{
-		Scene current;
-	};
+	Scene_Manager& get_scene_manager() {
+		static Scene_Manager mgr;
+		return mgr;
+	}
 
 	static const Scene_Config suzanne_config =
 	{
@@ -73,11 +73,6 @@ namespace
 			.ao_settings           = { vct::get_aperture(60.00f), 0.594f, 10.0f, 0.5f, 1.0f, true }
 		}
 	};
-
-	Scene_Manager& get_scene_manager() {
-		static Scene_Manager mgr;
-		return mgr;
-	}
 }
 
 namespace scene

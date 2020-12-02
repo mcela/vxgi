@@ -42,6 +42,7 @@ using glm::mat4;
 #include "scene.h"
 #include "assets.h"
 #include "renderer.h"
+#include "opengl_renderer.h"
 #include "app.h"
 
 #include "containers.cpp"

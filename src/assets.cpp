@@ -6,27 +6,15 @@
 
 namespace
 {
-	struct Asset_Manager
-	{
-		Array<Model*>     models;
-		Array<Mesh*>      meshes;
-		Array<Material*>  materials;
-		Array<Texture2D*> textures;
-
-		Texture2D         blank;
-		Mesh              unit_cube;
-		Mesh              unit_quad;
-	};
+	Asset_Manager& get_asset_manager() {
+		static Asset_Manager mgr;
+		return mgr;
+	}
 
 	void       upload_mesh_to_gpu(Mesh& mesh, Array<Vertex>& vertex_buffer);
 	bool       load_texture(Texture2D& out, const char* png_file, bool generate_mipmaps = false); // uploads to gpu aswell
 	Texture2D* get_or_load_material_texture(const char* name, Hashmap<const char*, Texture2D*>& loaded_textures, const char* path_to_textures);
 	void       set_material_from(Material& m, tinyobj::material_t& mat);
-
-	Asset_Manager& get_asset_manager() {
-		static Asset_Manager mgr;
-		return mgr;
-	}
 }
 
 namespace assets

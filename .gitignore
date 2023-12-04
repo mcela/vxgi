@@ -1,8 +1,9 @@
-lib/tinyobjloader-master/models
-lib/tinyobjloader-master/tests
+lib/tinyobjloader/models
+lib/tinyobjloader/tests
 
 #imgui.ini
 
+bin
 bin/*.dSYM
 bin/macos
 bin/macosDebug
@@ -10,6 +11,8 @@ bin/linux
 bin/linuxDebug
 bin/windows
 bin/windowsDebug
+build
+data/vxgi*
 
 *.log
 *.sublime-*

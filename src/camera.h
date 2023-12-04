@@ -1,37 +1,44 @@
-struct Camera
+#pragma once
+
+#include "types.h"
+
+namespace vxgi
 {
-	vec3 up = { 0,1,0 };
-	vec3 direction = { 0,0,-1 };
-	vec3 position = { 0,0,0 };
+	struct Camera
+	{
+		vec3 up = { 0,1,0 };
+		vec3 direction = { 0,0,-1 };
+		vec3 position = { 0,0,0 };
 
-	mat4 view = mat4(1.0f);
-	mat4 projection = mat4(1.0f);
-	mat4 VP = mat4(1.0f);
-};
+		mat4 view = mat4(1.0f);
+		mat4 projection = mat4(1.0f);
+		mat4 VP = mat4(1.0f);
+	};
 
-struct Fly_Camera_Controls
-{
-	float yaw = 0.0f;
-	float pitch = 0.0f;
-	bool is_first_update = true;
+	struct Camera_Controls_Fly
+	{
+		float yaw = 0.0f;
+		float pitch = 0.0f;
+		bool is_first_update = true;
 
-	Camera* camera = NULL;
-	Camera lerp_state;
-};
+		Camera* camera = NULL;
+		Camera lerp_state;
+	};
 
-namespace camera
-{
-	void update(Camera& c);
+	namespace camera
+	{
+		void update(Camera&);
 
-	void set_to_perspective(Camera& c, float aspect_ratio, float fov = 45.0f, float near_plane = 0.1f, float far_plane = 1000.0f);
-	void set_to_ortho(Camera& c);
+		void set_to_perspective(Camera&, float aspect_ratio, float fov = 45.0f, float near_plane = 0.1f, float far_plane = 1000.0f);
+		void set_to_ortho(Camera&);
 
-	vec3 get_right(Camera& c);
-	vec3 get_forward(Camera& c);
-}
+		vec3 get_right(Camera&);
+		vec3 get_forward(Camera&);
+	}
 
-namespace flycamera
-{
-	void attach(Fly_Camera_Controls& c, Camera* camera);
-	void update(Fly_Camera_Controls& c, GLFWwindow* window, float dt);
+	namespace flycamera
+	{
+		void attach(Camera_Controls_Fly&, Camera* camera);
+		void update(Camera_Controls_Fly&, GLFWwindow* window, float dt);
+	}
 }

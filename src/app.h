@@ -1,61 +1,67 @@
-enum Input_State
-{
-	FPS_CAMERA,
-	UI_INTERACTION
-};
+#pragma once
 
-struct Application
-{
-	GLFWwindow* window = NULL;
-	Input_State input_state = FPS_CAMERA;
-	Fly_Camera_Controls camera_controls;
-};
+#include "types.h"
+#include "camera.h"
 
-struct Application_Config
+namespace vxgi
 {
-	enum Window_Mode
+	enum APPLICATION_INPUT_MODE : u32
 	{
-		WINDOWED_FULLSCREEN,
-		WINDOWED,
-		//FULLSCREEN
+		APPLICATION_INPUT_FPS,
+		APPLICATION_INPUT_UI
 	};
 
-	const char* window_title = "VXGI 2020";
-	Window_Mode window_mode = WINDOWED;
+	enum APPLICATION_WINDOW_MODE : u32
+	{
+		//APPLICATION_WINDOW_FULLSCREEN,
+		APPLICATION_WINDOW_WINDOWED,
+		APPLICATION_WINDOW_WINDOWED_FULLSCREEN,
+	};
 
-	int gl_major_version = 4;
-	int gl_minor_version = 5;
-	int msaa_samples = 0;
-	int vsync_mode = 1; // -1, 0, 1, https://www.glfw.org/docs/3.3/window_guide.html#buffer_swap
+	struct Application_Config
+	{
+		const char* window_title = "VXGI 2020";
+		APPLICATION_WINDOW_MODE window_mode = APPLICATION_WINDOW_WINDOWED;
+		vec2 window_size = vec2(1920, 1080);
 
-	vec2 window_resolution = vec2(1920, 1080); // used if window_mode == WINDOWED
-};
+		int gl_major_version = 4;
+		int gl_minor_version = 5;
+		int msaa_samples = 0;
+		int vsync_mode = 1; // -1, 0, 1, https://www.glfw.org/docs/3.3/window_guide.html#buffer_swap
+	};
 
-struct Resolution
-{
-	vec2 window;
-	vec2 internal;
+	struct Application_Resolution
+	{
+		vec2 window;
+		vec2 internal;
 
-	float windowAspectRatio = 1.0f;
-	float internalAspectRatio = 1.0f;
+		float windowAspectRatio = 1.0f;
+		float internalAspectRatio = 1.0f;
 
-	vec2 position0;
-	vec2 position1;
-};
+		vec2 position0;
+		vec2 position1;
+	};
 
-namespace application
-{
-	bool init(int argc, const char* argv[], const vec2& internal_render_resolution = vec2(1920, 1080));
-	void deinit();
-	void run();
+	struct Application
+	{
+		GLFWwindow* window = nullptr;
+		Application_Resolution resolution;
+		Camera_Controls_Fly camera_controls;
+		APPLICATION_INPUT_MODE input_state = APPLICATION_INPUT_FPS;
+	};
 
-	std::string read_file(const char* filepath);
-}
+	namespace application
+	{
+		bool init(int argc, const char* argv[], const vec2& internal_render_resolution = vec2(1920, 1080));
+		void uninit();
 
-namespace resolution
-{
-	Resolution& get();
-	void        set(vec2 windowResolution, vec2 internalRenderResolution);
-	void        scale_with_black_bars();
-	void        window_size_changed(int width, int height);
+		void run();
+
+		Application_Resolution& resolution_get();
+		void resolution_set(vec2 windowResolution, vec2 internalRenderResolution);
+		void resolution_scale_with_black_bars();
+		void resolution_window_size_changed(int width, int height);
+
+		std::string read_file(const char* filepath);
+	}
 }
